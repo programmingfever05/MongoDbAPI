@@ -7,12 +7,10 @@ import os
 
 app = flask.Flask(__name__)
 
-@app.route("/get_yml_file/<filename>", methods = ["GET","POST"])
-def get_yml_file(filename):
+@app.route("/get_file_data/<filename>", methods = ["GET","POST"])
+def getData(filename):
     
-    if filename.split(".")[1] != "yml":
-        return "Please select yml file."
-    else:
+    if filename.split(".")[1] == "yml" or filename.split(".")[1] == "html":
         directory = os.getcwd()
         file = directory +"\\"+ filename
 
@@ -20,20 +18,8 @@ def get_yml_file(filename):
             data = f.read()
             
             return data
-
-@app.route("/get_jinja_file/<filename>", methods = ["GET","POST"])
-def get_jinja_file(filename):
-    
-    if filename.split(".")[1] != "html":
-        return "Please select jinja file."
     else:
-        directory = os.getcwd()
-        file = directory +"\\"+ filename
-
-        with open(file) as f:
-            data = f.read()
-            
-            return data
+        return "Please select yml or jinja file."
 
 if __name__ == "__main__":
     app.run(debug=True)
